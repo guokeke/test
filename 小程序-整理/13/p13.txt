@@ -1,0 +1,227 @@
+frame(a,r,irql,csl,status,OldIrql,CurrentTimeouts,lock,k,ListElement,Irp,IrpSp,CancelIrql,BytesToMove,FirstHalf,SecondHalf,LockHeld,fp_executionPath) and (
+int a and skip;
+int r and skip;
+int irql and skip;
+int csl and skip;
+int status and skip;
+int OldIrql and skip;
+int CurrentTimeouts and skip;
+int lock and skip;
+int k and skip;
+int ListElement and skip;
+int Irp and skip;
+int IrpSp and skip;
+int CancelIrql and skip;
+int BytesToMove and skip;
+int FirstHalf and skip;
+int SecondHalf and skip;
+int LockHeld and skip;
+FILE* fp_executionPath <== fopen("D:\\Eclipse-TPChecker\\expliciteCegar3\\executionPath.txt", "w") and skip;
+ function KeAcquireSpinLock ( int *lp,int *ip )
+ {
+     * lp:=1;
+     * ip:=irql
+     
+ };
+ function KeReleaseSpinLock ( int *lp,int i )
+ {
+     * lp:=0;
+     irql:=i
+     
+ };
+ function IoAcquireCancelSpinLock ( int *ip )
+ {
+     csl:=1;
+     * ip:=irql
+     
+ };
+ function IoReleaseCancelSpinLock ( int ip )
+ {
+     csl:=0;
+     irql:=ip
+     
+ };
+ function IoGetCurrentIrpStackLocation ( int a,int RValue )
+ {
+     frame(IoGetCurrentIrpStackLocation_rand_x,return) and ( 
+     int return<==0 and skip;
+     int IoGetCurrentIrpStackLocation_rand_x and skip;
+     IoGetCurrentIrpStackLocation_rand_x:=rand(RValue);
+     return<==1 and RValue:=IoGetCurrentIrpStackLocation_rand_x;
+     skip
+     )
+     }; 
+  function RemoveReferenceAndCompleteRequest ( int a,int b )
+ {
+     skip
+ };
+ function main (  )
+ {
+     frame(main_rand_x,main_rand_x1,main_rand_x2,main_1_rand_x3,main_1_rand_x4,main_1_rand_x5,main_1_3_rand_x6,main_1_6_rand_x7,main_1_6_7_rand_x8,main_1_6_7_9_rand_x8,main_14_ddd,continue) and (
+     int continue<==0 and skip;
+     status:=1;
+     CurrentTimeouts:=rand(RValue);
+     k:=rand(RValue);
+     a:=1;
+     a:=0;
+     int main_rand_x and skip;
+     main_rand_x:=rand(RValue);
+     int main_rand_x1 and skip;
+     main_rand_x1:=rand(RValue);
+     int main_rand_x2 and skip;
+     main_rand_x2:=rand(RValue);
+     while( (main_rand_x AND k>0) AND (main_rand_x1 OR main_rand_x2))
+     {
+          fputs("[(rand_x && k>0) && (rand_x1 || rand_x2)]\n" ,fp_executionPath ) and skip;
+         continue<==0 and skip;
+         ListElement:=rand(RValue);
+         Irp:=rand(RValue);
+         IrpSp:=rand(RValue);
+         CancelIrql:=rand(RValue);
+         k:=k-1;
+         Irp:=rand(RValue);
+         IoAcquireCancelSpinLock(&CancelIrql);
+         int main_1_rand_x3 and skip;
+         main_1_rand_x3:=rand(RValue);
+         if(main_1_rand_x3) then 
+         {
+              fputs("[rand_x3]\n",fp_executionPath) and skip;
+             IoReleaseCancelSpinLock(CancelIrql);
+             continue<==1 and skip
+              
+         }
+         else 
+         {
+              fputs("[!(rand_x3)]\n",fp_executionPath) and skip 
+         };
+         if(continue=0)   then 
+         {
+             IoReleaseCancelSpinLock(CancelIrql);
+             r:=1;
+             r:=0;
+             status:=1;
+             Irp:=NULL;
+             LockHeld:=1;
+             a:=1;
+             a:=0;
+             int main_1_rand_x4 and skip;
+             main_1_rand_x4:=rand(RValue);
+             int main_1_rand_x5 and skip;
+             main_1_rand_x5:=rand(RValue);
+             if(main_1_rand_x4 AND main_1_rand_x5) then 
+             {
+                  fputs("[rand_x4 && rand_x5]\n",fp_executionPath) and skip;
+                 Irp:=rand(RValue);
+                 IrpSp:=IoGetCurrentIrpStackLocation(Irp,RValue);
+                 BytesToMove:=rand(RValue);
+                 int main_1_3_rand_x6 and skip;
+                 main_1_3_rand_x6:=rand(RValue);
+                 if(main_1_3_rand_x6) then 
+                 {
+                      fputs("[rand_x6]\n",fp_executionPath) and skip;
+                     FirstHalf:=rand(RValue);
+                     SecondHalf:=BytesToMove-FirstHalf
+                 }
+                 else
+                 {
+                      fputs("[!(rand_x6)]\n",fp_executionPath) and skip;
+                     skip
+                 }
+                 
+             }
+             else
+             { 
+              fputs("[!(rand_x4 && rand_x5)]\n",fp_executionPath) and skip;
+             int main_1_6_rand_x7 and skip;
+             main_1_6_rand_x7:=rand(RValue);
+             if(main_1_6_rand_x7) then 
+             {
+                  fputs("[rand_x7]\n",fp_executionPath) and skip;
+                 Irp:=rand(RValue);
+                 IoAcquireCancelSpinLock(&CancelIrql);
+                 int main_1_6_7_rand_x8 and skip;
+                 main_1_6_7_rand_x8:=rand(RValue);
+                 if(main_1_6_7_rand_x8) then 
+                 {
+                      fputs("[rand_x8]\n",fp_executionPath) and skip;
+                     IoReleaseCancelSpinLock(CancelIrql);
+                     r:=1;
+                     r:=0;
+                     RemoveReferenceAndCompleteRequest(Irp,2);
+                     LockHeld:=0
+                     
+                 }
+                 else
+                 { 
+                  fputs("[!(rand_x8)]\n",fp_executionPath) and skip;
+                 CurrentTimeouts:=rand(RValue);
+                 int main_1_6_7_9_rand_x8 and skip;
+                 main_1_6_7_9_rand_x8:=rand(RValue);
+                 if(main_1_6_7_9_rand_x8) then 
+                 {
+                      fputs("[rand_x8]\n",fp_executionPath) and skip;
+                     IoReleaseCancelSpinLock(CancelIrql);
+                     r:=1;
+                     r:=0;
+                     RemoveReferenceAndCompleteRequest(Irp,3);
+                     LockHeld:=0
+                 }
+                 else
+                 {
+                      fputs("[!(rand_x8)]\n",fp_executionPath) and skip;
+                     IoReleaseCancelSpinLock(CancelIrql);
+                     k:=k-1
+                 }
+             };
+             Irp:=NULL
+             
+         }
+         else 
+         {
+              fputs("[!(rand_x7)]\n",fp_executionPath) and skip
+         }
+     };
+     if(LockHeld=1) then 
+     {
+          fputs("[LockHeld==1]\n",fp_executionPath) and skip;
+         r:=1;
+         r:=0
+         
+     }
+     else 
+     {
+          fputs("[!(LockHeld==1)]\n",fp_executionPath) and skip 
+     };
+     if(Irp!=0) then 
+     {
+          fputs("[Irp!=0]\n",fp_executionPath) and skip;
+         RemoveReferenceAndCompleteRequest(Irp,1)
+         
+     }
+     else 
+     {
+          fputs("[!(Irp!=0)]\n",fp_executionPath) and skip 
+     };
+     a:=1;
+     a:=0
+ }
+ else
+ {
+     skip
+ }
+ };
+ continue<==0 and skip;
+ fputs("[!((rand_x && k>0) && (rand_x1 || rand_x2))]\n",fp_executionPath) and skip ;
+ r:=1;
+ r:=0;
+ while(1)
+ {
+      fputs("[1]\n",fp_executionPath) and skip;
+     int main_14_ddd<==0 and skip;
+     main_14_ddd:=main_14_ddd
+ };
+ fputs("[!(1)]\n",fp_executionPath) and skip
+ )
+ };
+  main()
+ )

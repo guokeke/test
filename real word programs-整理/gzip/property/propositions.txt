@@ -1,0 +1,1 @@
+p=>Global::temp_optc == 116 && q=>Global::temp_decompress == 1
